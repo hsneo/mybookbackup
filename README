@@ -1,0 +1,76 @@
+mybookbackup module 1.0
+=======================
+Mind & Media company from Singapore has developed the module. The script is well-tested on Centos 5.6.
+
+
+Date        Author     Changes
+=======================================
+2011-07-07  Hock Sik   To develop scripts to automate the copy of files during the plugging-in 
+                       of an external hard drive
+
+Introduction.
+*************
+Here is a script written in bash and easily understood. This is an improvement from last time we did a similar 
+rsync script using Perl. 
+
+The bash script does the below 
+a. create the backup directory if it does not exist
+b. use rsync to copy files and sub-directories from the source directory to the destination 
+c. Those sync to an external hard drive are captured in mybookbackup.log 
+d. email the run result to user
+
+
+Note
+****   
+a. How to Mount an NTFS Filesystem
+   As of CentOS 5.4 (kernel 2.6.18-164 or newer), the fuse kernel module is included in the kernel itself. 
+   If the rpmforge repo is disabled by default, yum --enablerepo=rpmforge install fuse fuse-ntfs-3g 
+
+   Edit /etc/fstab to add in the below ntfs mountpoint for an external hdd 
+   LABEL=/media            /media                  ntfs-3g rw,umask=0000,defaults 0 0
+   
+   Further information is available at http://wiki.centos.org/TipsAndTricks/NTFS
+
+b. If the option=log-file is not supported by rsync,    
+   please download the latest version of rsync from http://packages.sw.be/rsync/ to support the option=log-file
+
+c. How to gather udev info on the external hard drive
+   Use the command: udevinfo -a -p $(udevinfo -q path -n /dev/sdb1)
+
+   THe udev info can be used to define rules in a rules file.
+ 
+   Set the permission privilege of the rules file by using the command: chmod 644 95-mybookbackup.rules
+
+   The info can be found at http://ubuntuforums.org/showthread.php?t=168221.
+
+d. The script needs to be made executable by using the command: chmod 755 mybookbackup.sh
+
+
+
+Installation
+************
+Place the rules file named 95-mybookbackup.rules under  /etc/udev/rules.d
+
+It will tell system to find and run an executable script.  
+
+
+
+UPGRADE
+*******
+For upgrade, pls look for the upgraded version at https://github.com/mindmedia
+
+
+Office
+******
+Mind & Media
+10 UBI Crescent, #03-59 UBI TechPark,
+Singapore 408564
+
+If you need help, post a message to anthony@mindmedia.com.sg.
+    
+The website is at http://www.mindmedia.com.sg.
+
+Enjoy!
+
+
+

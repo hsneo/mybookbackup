@@ -1,0 +1,3 @@
+# This script triggers the execution of the bash script when an external hdd is plugged in
+#
+KERNEL=="sd?1", BUSM=="usb", SYSFS{serial}=="2843415A4136393937383532", ACTION=="add", RUN+="/home/hsneo/project/mybookbackup/mybookbackup.sh  add %k", SYMLINK+="cusb1"
